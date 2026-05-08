@@ -1,12 +1,11 @@
 import { useState } from "react";
-import type { AuthUser, LoginCredentials } from "../types/auth.types";
-import { login } from "../services/authService";
+import type { LoginCredentials } from "../types/auth.types";
 
 type LoginFormProps = {
-    onLoginSuccess: (user: AuthUser) => void;
+    onSubmitRequest: (credentials: LoginCredentials) => void;
 };
 
-const LoginForm = ({ onLoginSuccess }: LoginFormProps) => {
+const LoginForm = ({ onSubmitRequest }: LoginFormProps) => {
     const [credentials, setCredentials] = useState<LoginCredentials>({
         email: "",
         password: "",
@@ -23,20 +22,16 @@ const LoginForm = ({ onLoginSuccess }: LoginFormProps) => {
         }));
     };
 
-    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        setError("");
 
-        try {
-            const user = await login(credentials);
-            onLoginSuccess(user);
-        } catch (error) {
-            if (error instanceof Error) {
-                setError(error.message);
-            } else {
-                setError("Something went wrong.");
-            }
+        if (!credentials.email.trim() || !credentials.password.trim()) {
+            setError("Email and password are required.");
+            return;
         }
+
+        setError("");
+        onSubmitRequest(credentials);
     };
 
     return (
@@ -98,7 +93,7 @@ const LoginForm = ({ onLoginSuccess }: LoginFormProps) => {
                     type="submit"
                     className="w-full rounded-xl bg-blue-600 px-4 py-3 font-semibold text-white shadow-md transition hover:bg-blue-700 active:scale-[0.98]"
                 >
-                    Submit
+                    Login
                 </button>
             </form>
         </div>

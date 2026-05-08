@@ -1,6 +1,14 @@
 import { Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
+
 import LoginPage from "./features/auth/pages/LoginPage";
+
+import StudentsPage from "./students/pages/StudentsPage";
+import StudentDetailsPage from "./students/pages/StudentDetailsPage";
+
+import TeachersPage from "./teachers/pages/TeachersPage";
+
+import CoursesPage from "./courses/pages/CoursesPage";
 
 const App = () => {
   return (
@@ -8,26 +16,16 @@ const App = () => {
       <Navbar />
 
       <Routes>
-        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
+
+        <Route path="/students" element={<StudentsPage />} />
+        <Route path="/students/:id" element={<StudentDetailsPage />} />
+
+        <Route path="/teachers" element={<TeachersPage />} />
+
+        <Route path="/courses" element={<CoursesPage />} />
       </Routes>
     </div>
-  );
-};
-
-const HomePage = () => {
-  return (
-    <main className="flex min-h-[calc(100vh-72px)] items-center justify-center px-4">
-      <div className="max-w-xl rounded-2xl bg-white p-8 text-center shadow-xl">
-        <h1 className="mb-4 text-3xl font-bold text-gray-900">
-          Welcome to My App
-        </h1>
-
-        <p className="text-gray-600">
-          This is the home page. Use the navbar to open the authentication page.
-        </p>
-      </div>
-    </main>
   );
 };
 

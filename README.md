@@ -300,3 +300,9 @@ Install React Router
 
 In terminal:
 npm install react-router-dom
+
+. Install Tailwind
+
+Run this in your project terminal:
+
+npm install tailwindcss @tailwindcss/vite

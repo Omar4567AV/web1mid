@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
 import LoginForm from "../components/LoginForm";
-import type { AuthUser } from "../types/auth.types";
-import { getCurrentUser, logout } from "../services/authService";
+import type { AuthUser, LoginCredentials } from "../types/auth.types";
+import { getCurrentUser, login, logout } from "../services/authService";
 
 const LoginPage = () => {
     const [user, setUser] = useState<AuthUser | null>(null);
+    const [pendingCredentials, setPendingCredentials] =
+        useState<LoginCredentials | null>(null);
+
     const [showDialog, setShowDialog] = useState<boolean>(false);
-    const [showLoginForm, setShowLoginForm] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string>("");
 
     useEffect(() => {
         const currentUser = getCurrentUser();
@@ -17,57 +20,62 @@ const LoginPage = () => {
         }
     }, []);
 
-    const handleOpenDialog = () => {
+    const handleSubmitRequest = (credentials: LoginCredentials) => {
+        setPendingCredentials(credentials);
         setShowDialog(true);
     };
 
     const handleCloseDialog = () => {
         setShowDialog(false);
+        setPendingCredentials(null);
     };
 
-    const handleConfirmOpenLogin = () => {
+    const handleConfirmLogin = () => {
+        if (!pendingCredentials) return;
+
         setShowDialog(false);
         setIsLoading(true);
+        setError("");
 
-        setTimeout(() => {
-            setIsLoading(false);
-            setShowLoginForm(true);
+        setTimeout(async () => {
+            try {
+                const loggedInUser = await login(pendingCredentials);
+                setUser(loggedInUser);
+                setPendingCredentials(null);
+            } catch (error) {
+                if (error instanceof Error) {
+                    setError(error.message);
+                } else {
+                    setError("Something went wrong.");
+                }
+            } finally {
+                setIsLoading(false);
+            }
         }, 3000);
-    };
-
-    const handleLoginSuccess = (loggedInUser: AuthUser) => {
-        setUser(loggedInUser);
-        setShowLoginForm(false);
     };
 
     const handleSignOut = () => {
         logout();
         setUser(null);
-        setShowLoginForm(false);
-        setIsLoading(false);
+        setPendingCredentials(null);
         setShowDialog(false);
+        setIsLoading(false);
+        setError("");
     };
 
     return (
-        <main className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
+        <main className="flex min-h-[calc(100vh-72px)] items-center justify-center bg-gray-100 px-4">
             <section className="w-full max-w-lg">
-                {!user && !showLoginForm && !isLoading && (
-                    <div className="rounded-2xl bg-white p-8 text-center shadow-xl">
-                        <h1 className="mb-3 text-3xl font-bold text-gray-900">
-                            Authentication
-                        </h1>
+                {!user && !isLoading && (
+                    <>
+                        <LoginForm onSubmitRequest={handleSubmitRequest} />
 
-                        <p className="mb-8 text-gray-500">
-                            Click the button below to start the fake login process.
-                        </p>
-
-                        <button
-                            onClick={handleOpenDialog}
-                            className="rounded-xl bg-blue-600 px-8 py-3 font-semibold text-white shadow-md transition hover:bg-blue-700 active:scale-[0.98]"
-                        >
-                            Login
-                        </button>
-                    </div>
+                        {error && (
+                            <p className="mt-4 rounded-xl bg-red-50 px-4 py-3 text-center text-sm text-red-600">
+                                {error}
+                            </p>
+                        )}
+                    </>
                 )}
 
                 {isLoading && (
@@ -75,17 +83,13 @@ const LoginPage = () => {
                         <div className="mx-auto mb-5 h-12 w-12 animate-spin rounded-full border-4 border-gray-200 border-t-blue-600" />
 
                         <h2 className="text-xl font-semibold text-gray-900">
-                            Opening login form...
+                            Logging in...
                         </h2>
 
                         <p className="mt-2 text-sm text-gray-500">
                             Please wait for 3 seconds.
                         </p>
                     </div>
-                )}
-
-                {!user && showLoginForm && !isLoading && (
-                    <LoginForm onLoginSuccess={handleLoginSuccess} />
                 )}
 
                 {user && (
@@ -122,7 +126,7 @@ const LoginPage = () => {
                         </h2>
 
                         <p className="mb-6 text-gray-600">
-                            Do you want to open the login form?
+                            Do you want to login with this account?
                         </p>
 
                         <div className="flex justify-end gap-3">
@@ -134,7 +138,7 @@ const LoginPage = () => {
                             </button>
 
                             <button
-                                onClick={handleConfirmOpenLogin}
+                                onClick={handleConfirmLogin}
                                 className="rounded-xl bg-blue-600 px-5 py-2 font-medium text-white transition hover:bg-blue-700"
                             >
                                 Yes
