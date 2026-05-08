@@ -296,3 +296,7 @@ This project uses Feature-Based Architecture because it is the best structure fo
 It keeps the project organized by real university modules such as authentication, students, teachers, and courses.
 
 This makes the project scalable, maintainable, and ready for future features.
+Install React Router
+
+In terminal:
+npm install react-router-dom
