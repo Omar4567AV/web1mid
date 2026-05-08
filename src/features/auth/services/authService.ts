@@ -12,8 +12,8 @@ export const login = async (
     }
 
     const fakeUser: AuthUser = {
-        id: crypto.randomUUID(),
-        email,
+        id: Date.now().toString(),
+        email: email,
         name: "Fake User",
     };
 
