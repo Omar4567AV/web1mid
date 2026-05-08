@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-
+import Button from "@mui/material/Button";
 const HomePage = () => {
     const showSuccessToast = () => {
         toast.success("Operation completed successfully!");
@@ -87,6 +87,7 @@ const HomePage = () => {
                         >
                             Error Toast
                         </button>
+
                     </div>
                 </div>
             </section>

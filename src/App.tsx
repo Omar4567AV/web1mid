@@ -1,18 +1,19 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import ProtectedRoute from "./components/ProtectedRoute";
-import { isAuthenticated } from "./features/auth/services/authService";
 
-import HomePage from "./pages/HomePage";
-import ThemePage from "./pages/ThemePage";
+import Navbar from "@/components/Navbar";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import { isAuthenticated } from "@/features/auth/services/authService";
 
-import LoginPage from "./features/auth/pages/LoginPage";
+import HomePage from "@/pages/HomePage";
+import ThemePage from "@/pages/ThemePage";
 
-import StudentsPage from "./students/pages/StudentsPage";
-import StudentDetailsPage from "./students/pages/StudentDetailsPage";
+import LoginPage from "@/features/auth/pages/LoginPage";
 
-import TeachersPage from "./teachers/pages/TeachersPage";
-import CoursesPage from "./courses/pages/CoursesPage";
+import StudentsPage from "@/students/pages/StudentsPage";
+import StudentDetailsPage from "@/students/pages/StudentDetailsPage";
+
+import TeachersPage from "@/teachers/pages/TeachersPage";
+import CoursesPage from "@/courses/pages/CoursesPage";
 
 const App = () => {
   const location = useLocation();
