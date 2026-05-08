@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import LoginForm from "../components/LoginForm";
 import type { AuthUser, LoginCredentials } from "../types/auth.types";
 import { getCurrentUser, login, logout } from "../services/authService";
-
+import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
     const [user, setUser] = useState<AuthUser | null>(null);
     const [pendingCredentials, setPendingCredentials] =

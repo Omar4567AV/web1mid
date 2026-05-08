@@ -25,7 +25,9 @@ const Navbar = () => {
                     <NavLink to="/login" className={navLinkClass}>
                         Auth
                     </NavLink>
-
+                    <NavLink to="/theme" className={navLinkClass}>
+                        Theme
+                    </NavLink>
                     {user && (
                         <span className="hidden rounded-xl bg-green-100 px-4 py-2 text-sm font-medium text-green-700 md:block">
                             {user.email}
