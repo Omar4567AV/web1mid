@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import Button from "@mui/material/Button";
+
 const HomePage = () => {
     const showSuccessToast = () => {
         toast.success("Operation completed successfully!");
@@ -8,6 +9,22 @@ const HomePage = () => {
 
     const showErrorToast = () => {
         toast.error("Something went wrong!");
+    };
+
+    const showWarningToast = () => {
+        toast("Warning: Please check your action!", {
+            icon: "⚠️",
+        });
+    };
+
+    const buttonStyle = {
+        borderRadius: "12px",
+        paddingTop: "12px",
+        paddingBottom: "12px",
+        textTransform: "none",
+        fontWeight: 700,
+        color: "white",
+        boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
     };
 
     return (
@@ -20,7 +37,8 @@ const HomePage = () => {
 
                     <p className="mx-auto max-w-2xl text-[var(--color-muted)]">
                         A modern React TypeScript frontend project using routing,
-                        authentication, Tailwind CSS, and global color variables.
+                        authentication, Tailwind CSS, Material UI buttons, and global color
+                        variables.
                     </p>
                 </div>
 
@@ -34,33 +52,72 @@ const HomePage = () => {
                     </p>
 
                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                        <Link
+                        <Button
+                            component={Link}
                             to="/login"
-                            className="rounded-xl bg-[var(--color-primary)] px-5 py-3 text-center font-semibold text-white shadow-md transition hover:bg-[var(--color-primary-hover)] active:scale-[0.98]"
+                            variant="contained"
+                            fullWidth
+                            sx={{
+                                ...buttonStyle,
+                                backgroundColor: "var(--color-primary)",
+                                "&:hover": {
+                                    backgroundColor: "var(--color-primary-hover)",
+                                },
+                            }}
                         >
                             Open Login
-                        </Link>
+                        </Button>
 
-                        <Link
+                        <Button
+                            component={Link}
                             to="/students"
-                            className="rounded-xl bg-[var(--color-success)] px-5 py-3 text-center font-semibold text-white shadow-md transition active:scale-[0.98]"
+                            variant="contained"
+                            fullWidth
+                            sx={{
+                                ...buttonStyle,
+                                backgroundColor: "var(--color-success)",
+                                "&:hover": {
+                                    opacity: 0.9,
+                                    backgroundColor: "var(--color-success)",
+                                },
+                            }}
                         >
                             Open Students
-                        </Link>
+                        </Button>
 
-                        <Link
+                        <Button
+                            component={Link}
                             to="/teachers"
-                            className="rounded-xl bg-purple-600 px-5 py-3 text-center font-semibold text-white shadow-md transition hover:bg-purple-700 active:scale-[0.98]"
+                            variant="contained"
+                            fullWidth
+                            sx={{
+                                ...buttonStyle,
+                                backgroundColor: "var(--color-purple)",
+                                "&:hover": {
+                                    opacity: 0.9,
+                                    backgroundColor: "var(--color-purple)",
+                                },
+                            }}
                         >
                             Open Teachers
-                        </Link>
+                        </Button>
 
-                        <Link
+                        <Button
+                            component={Link}
                             to="/courses"
-                            className="rounded-xl bg-[var(--color-warning)] px-5 py-3 text-center font-semibold text-white shadow-md transition active:scale-[0.98]"
+                            variant="contained"
+                            fullWidth
+                            sx={{
+                                ...buttonStyle,
+                                backgroundColor: "var(--color-warning)",
+                                "&:hover": {
+                                    opacity: 0.9,
+                                    backgroundColor: "var(--color-warning)",
+                                },
+                            }}
                         >
                             Open Courses
-                        </Link>
+                        </Button>
                     </div>
                 </div>
 
@@ -73,21 +130,54 @@ const HomePage = () => {
                         Use these buttons to test notification cases.
                     </p>
 
-                    <div className="grid gap-4 sm:grid-cols-2">
-                        <button
+                    <div className="grid gap-4 sm:grid-cols-3">
+                        <Button
                             onClick={showSuccessToast}
-                            className="rounded-xl bg-[var(--color-success)] px-5 py-3 font-semibold text-white shadow-md transition active:scale-[0.98]"
+                            variant="contained"
+                            fullWidth
+                            sx={{
+                                ...buttonStyle,
+                                backgroundColor: "var(--color-success)",
+                                "&:hover": {
+                                    opacity: 0.9,
+                                    backgroundColor: "var(--color-success)",
+                                },
+                            }}
                         >
                             Success Toast
-                        </button>
+                        </Button>
 
-                        <button
+                        <Button
                             onClick={showErrorToast}
-                            className="rounded-xl bg-[var(--color-danger)] px-5 py-3 font-semibold text-white shadow-md transition active:scale-[0.98]"
+                            variant="contained"
+                            fullWidth
+                            sx={{
+                                ...buttonStyle,
+                                backgroundColor: "var(--color-danger)",
+                                "&:hover": {
+                                    opacity: 0.9,
+                                    backgroundColor: "var(--color-danger)",
+                                },
+                            }}
                         >
                             Error Toast
-                        </button>
+                        </Button>
 
+                        <Button
+                            onClick={showWarningToast}
+                            variant="contained"
+                            fullWidth
+                            sx={{
+                                ...buttonStyle,
+                                backgroundColor: "var(--color-warning)",
+                                "&:hover": {
+                                    opacity: 0.9,
+                                    backgroundColor: "var(--color-warning)",
+                                },
+                            }}
+                        >
+                            Warning Toast
+                        </Button>
                     </div>
                 </div>
             </section>

@@ -29,3 +29,11 @@
     --color-danger: #ef4444;
     --color-warning: #fbbf24;
 }
+
+:root {
+    --color-purple: #9333ea;
+}
+
+.dark {
+    --color-purple: #a855f7;
+}
