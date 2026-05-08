@@ -1,5 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
-import { getCurrentUser, logout } from "../features/auth/services/authService";
+import { getCurrentUser, logout } from "@/features/auth/services/authService";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -23,6 +24,7 @@ const Navbar = () => {
                     <h1 className="text-xl font-bold text-[var(--color-text)]">
                         My School App
                     </h1>
+
                     <p className="text-xs text-[var(--color-muted)]">
                         React + TypeScript
                     </p>
@@ -46,7 +48,10 @@ const Navbar = () => {
                     </NavLink>
 
                     <NavLink to="/theme" className={navLinkClass}>
-                        Theme
+                        <div className="flex items-center gap-1">
+                            <SettingsIcon sx={{ fontSize: 20 }} />
+                            <span>Settings</span>
+                        </div>
                     </NavLink>
 
                     {user && (
